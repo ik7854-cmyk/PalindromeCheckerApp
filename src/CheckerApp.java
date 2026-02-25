@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 public class CheckerApp {
 
     public static void main(String args[]) {
@@ -6,21 +8,24 @@ public class CheckerApp {
         System.out.println("        WELCOME TO PALINDROME CHECKER");
         System.out.println("=================================================");
         System.out.println("This application checks whether a word is a palindrome.");
-        System.out.println("Using Character Array & Two-Pointer Technique");
+        System.out.println("Using Stack (LIFO) Technique");
         System.out.println("=================================================");
+
         String word = "madam";
-        char[] characters = word.toCharArray();
-        int start = 0;
-        int end = characters.length - 1;
+
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < word.length(); i++) {
+            stack.push(word.charAt(i));
+        }
+
         boolean isPalindrome = true;
 
-        while (start < end) {
-            if (characters[start] != characters[end]) {
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
-            start++;
-            end--;
         }
 
         System.out.println("\nChecking word : " + word);
