@@ -21,15 +21,18 @@ public class CheckerApp {
         System.out.println("====================================");
         System.out.println("WELCOME");
         System.out.println("====================================");
-        System.out.println("Palindrome Checker - Recursion Version");
+        System.out.println("Palindrome Checker - Case Insensitive");
         System.out.println("====================================");
 
-        String word = "madam";
+        String word = "A man a plan a canal Panama";
 
-        if (isPalindrome(word, 0, word.length() - 1)) {
-            System.out.println(word + " is a Palindrome.");
+        // Normalize string
+        String normalized = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        if (isPalindrome(normalized, 0, normalized.length() - 1)) {
+            System.out.println("\"" + word + "\"" + " is a Palindrome.");
         } else {
-            System.out.println(word + " is NOT a Palindrome.");
+            System.out.println("\"" + word + "\"" + " is NOT a Palindrome.");
         }
     }
 }
