@@ -1,74 +1,19 @@
-class Node {
-    char data;
-    Node next;
-
-    Node(char data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
 public class CheckerApp {
 
-    public static Node createList(String word) {
-        Node head = null, tail = null;
+    static boolean isPalindrome(String word, int start, int end) {
 
-        for (char c : word.toCharArray()) {
-            Node newNode = new Node(c);
-
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-        return head;
-    }
-
-    public static Node reverse(Node head) {
-        Node prev = null;
-        Node current = head;
-        Node next;
-
-        while (current != null) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-        return prev;
-    }
-
-    public static boolean isPalindrome(Node head) {
-
-        if (head == null || head.next == null)
+        // Base condition
+        if (start >= end) {
             return true;
-
-        Node slow = head;
-        Node fast = head;
-
-        // Find middle using fast & slow pointers
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
         }
 
-        // Reverse second half
-        Node secondHalf = reverse(slow);
-        Node firstHalf = head;
-
-        // Compare both halves
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                return false;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
+        // Compare characters
+        if (word.charAt(start) != word.charAt(end)) {
+            return false;
         }
 
-        return true;
+        // Recursive call
+        return isPalindrome(word, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
@@ -76,14 +21,12 @@ public class CheckerApp {
         System.out.println("====================================");
         System.out.println("WELCOME");
         System.out.println("====================================");
-        System.out.println("Palindrome Checker - LinkedList Version");
+        System.out.println("Palindrome Checker - Recursion Version");
         System.out.println("====================================");
 
         String word = "madam";
 
-        Node head = createList(word);
-
-        if (isPalindrome(head)) {
+        if (isPalindrome(word, 0, word.length() - 1)) {
             System.out.println(word + " is a Palindrome.");
         } else {
             System.out.println(word + " is NOT a Palindrome.");
