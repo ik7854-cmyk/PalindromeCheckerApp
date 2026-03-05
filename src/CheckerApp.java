@@ -9,7 +9,7 @@ public class CheckerApp {
         System.out.println("====================================");
         System.out.println("WELCOME");
         System.out.println("====================================");
-        System.out.println("Palindrome Checker - Strategy Pattern");
+        System.out.println("Palindrome Algorithm Performance Test");
         System.out.println("====================================");
 
         String word = "A man a plan a canal Panama";
@@ -17,16 +17,40 @@ public class CheckerApp {
         // Normalize string
         String normalized = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        // Choose strategy dynamically
-        PalindromeStrategy strategy = new StackStrategy();
-        // PalindromeStrategy strategy = new DequeStrategy();
+        // Run Stack Strategy
+        PalindromeStrategy stackStrategy = new StackStrategy();
+        PalindromeChecker stackChecker = new PalindromeChecker(stackStrategy);
 
-        PalindromeChecker checker = new PalindromeChecker(strategy);
+        long startTime = System.nanoTime();
+        boolean stackResult = stackChecker.checkPalindrome(normalized);
+        long endTime = System.nanoTime();
+        long stackTime = endTime - startTime;
 
-        if (checker.checkPalindrome(normalized)) {
-            System.out.println("\"" + word + "\" is a Palindrome.");
+        // Run Deque Strategy
+        PalindromeStrategy dequeStrategy = new DequeStrategy();
+        PalindromeChecker dequeChecker = new PalindromeChecker(dequeStrategy);
+
+        startTime = System.nanoTime();
+        boolean dequeResult = dequeChecker.checkPalindrome(normalized);
+        endTime = System.nanoTime();
+        long dequeTime = endTime - startTime;
+
+        // Display results
+        System.out.println("\nInput String: \"" + word + "\"\n");
+
+        System.out.println("Stack Strategy Result: " + stackResult);
+        System.out.println("Execution Time (Stack): " + stackTime + " ns\n");
+
+        System.out.println("Deque Strategy Result: " + dequeResult);
+        System.out.println("Execution Time (Deque): " + dequeTime + " ns\n");
+
+        // Compare performance
+        if (stackTime < dequeTime) {
+            System.out.println("Stack Strategy is faster.");
+        } else if (dequeTime < stackTime) {
+            System.out.println("Deque Strategy is faster.");
         } else {
-            System.out.println("\"" + word + "\" is NOT a Palindrome.");
+            System.out.println("Both strategies have similar performance.");
         }
     }
 }
